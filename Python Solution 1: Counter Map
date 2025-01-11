@@ -1,0 +1,18 @@
+class Solution:
+    def wordSubsets(self, words1: List[str], words2: List[str]) -> List[str]:
+        required_counts = Counter()
+        for word2 in words2:
+            word2_counts = Counter(word2)
+            for char, count in word2_counts.items():
+                required_counts[char] = max(required_counts[char], count)
+        ans = []        
+        for word1 in words1:
+            word1_counts = Counter(word1)
+            flag = True
+            for char, count in required_counts.items():
+                if word1_counts[char] < count:
+                    flag = False
+                    break
+            if flag:
+                ans.append(word1)
+        return ans
